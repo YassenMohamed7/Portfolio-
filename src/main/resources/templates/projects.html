@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Yassin Mohamed</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+</head>
+<body>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <a class="navbar-brand" th:href="@{/}">
+            <i class="fas fa-code"></i> Yassin Mohamed
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/about}">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/projects}">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/contact}">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Page Header -->
+<header class="page-header bg-primary text-white py-5 mt-5">
+    <div class="container">
+        <h1 class="display-4 text-center">My Projects</h1>
+        <p class="lead text-center mb-0">
+            A collection of projects demonstrating my backend development expertise
+        </p>
+    </div>
+</header>
+
+<!-- Filter Section -->
+<section class="py-4 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                    <span class="fw-bold me-2">Filter by Technology:</span>
+                    <a th:href="@{/projects}"
+                       class="btn btn-sm"
+                       th:classappend="${selectedTechnology == null} ? 'btn-primary' : 'btn-outline-primary'">
+                        All
+                    </a>
+                    <a th:each="tech : ${technologies}"
+                       th:href="@{/projects(technology=${tech})}"
+                       th:text="${tech}"
+                       class="btn btn-sm"
+                       th:classappend="${selectedTechnology == tech} ? 'btn-primary' : 'btn-outline-primary'">
+                        Technology
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- No Projects Message -->
+            <div th:if="${#lists.isEmpty(projects)}" class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="fas fa-info-circle fa-2x mb-3"></i>
+                    <h4>No projects found</h4>
+                    <p class="mb-0">Try selecting a different technology filter.</p>
+                </div>
+            </div>
+
+            <!-- Project Cards -->
+            <div class="col-md-6 col-lg-4"
+                 th:each="project, iterStat : ${projects}"
+                 data-aos="fade-up"
+                 th:attr="data-aos-delay=${iterStat.index * 100}">
+                <div class="card h-100 shadow-sm project-card">
+                    <!-- Project Image -->
+                    <div class="position-relative">
+                        <img th:src="${project.imageUrl ?: '/images/project-placeholder.png'}"
+                             class="card-img-top"
+                             alt="Project Image"
+                             style="height: 200px; object-fit: cover;">
+                        <span th:if="${project.featured}"
+                              class="position-absolute top-0 end-0 badge bg-warning text-dark m-2">
+                                <i class="fas fa-star"></i> Featured
+                            </span>
+                    </div>
+
+                    <!-- Project Body -->
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" th:text="${project.title}">Project Title</h5>
+                        <p class="card-text flex-grow-1" th:text="${project.shortDescription}">
+                            Project description goes here.
+                        </p>
+
+                        <!-- Technologies -->
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-2">Technologies:</small>
+                            <div class="d-flex flex-wrap gap-1">
+                                    <span th:each="tech : ${project.technologies}"
+                                          class="badge bg-info text-dark"
+                                          th:text="${tech}">
+                                        Tech
+                                    </span>
+                            </div>
+                        </div>
+
+                        <!-- Highlights -->
+                        <div th:if="${!#lists.isEmpty(project.highlights)}" class="mb-3">
+                            <small class="text-muted d-block mb-2">Key Features:</small>
+                            <ul class="small mb-0 ps-3">
+                                <li th:each="highlight : ${#lists.size(project.highlights) > 2 ?
+                                                project.highlights.subList(0, 2) : project.highlights}"
+                                    th:text="${highlight}">
+                                    Highlight
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Date -->
+                        <div class="text-muted small mb-3" th:if="${project.completedDate}">
+                            <i class="far fa-calendar-alt me-1"></i>
+                            <span th:text="${#temporals.format(project.completedDate, 'MMMM yyyy')}">
+                                    Date
+                                </span>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="card-footer bg-transparent border-top-0">
+                        <div class="d-flex justify-content-between gap-2">
+                            <a th:href="@{/projects/{id}(id=${project.id})}"
+                               class="btn btn-sm btn-primary flex-grow-1">
+                                <i class="fas fa-info-circle me-1"></i>View Details
+                            </a>
+                            <a th:if="${project.githubUrl}"
+                               th:href="${project.githubUrl}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn btn-sm btn-outline-dark">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a th:if="${project.liveUrl}"
+                               th:href="${project.liveUrl}"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn btn-sm btn-outline-success">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-5 bg-light">
+    <div class="container text-center">
+        <h3 class="mb-4">Interested in collaborating?</h3>
+        <p class="lead mb-4">Let's discuss how we can work together on your next project.</p>
+        <a th:href="@{/contact}" class="btn btn-primary btn-lg">
+            <i class="fas fa-envelope me-2"></i>Get In Touch
+        </a>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-2">
+            <i class="fas fa-code"></i> Built with Spring Boot & Thymeleaf
+        </p>
+        <p class="mb-0">
+            &copy; <span th:text="${#dates.year(#dates.createNow())}">2025</span> Yassin Mohamed. All rights reserved.
+        </p>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        once: true
+    });
+</script>
+</body>
+</html>
