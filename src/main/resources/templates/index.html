@@ -70,24 +70,45 @@
 </div>
 
 <!-- Skills Section -->
-<section class="py-5 bg-light" id="skills">
+<section class="py-5 bg-light">
     <div class="container">
-        <h2 class="text-center mb-5">Technical Skills</h2>
-        <div class="row" th:each="entry : ${skills}">
-            <div class="col-12 mb-4">
-                <h4 class="text-primary mb-3" th:text="${entry.key}">Category</h4>
-                <div class="d-flex flex-wrap gap-2">
-                        <span th:each="skill : ${entry.value}"
-                              class="badge bg-secondary skill-badge p-2">
-                            <i th:class="${skill.iconClass}" class="me-1"></i>
-                            <span th:text="${skill.name}">Skill</span>
-                            <small th:text="'(' + ${skill.yearsOfExperience} + ' yrs)'"></small>
-                        </span>
+        <h2 class="text-center mb-5" data-aos="fade-up">Technical Skills</h2>
+
+        <div th:each="entry, iterStat : ${skills}"
+             class="mb-5"
+             data-aos="fade-up"
+             th:attr="data-aos-delay=${iterStat.index * 100}">
+            <h3 class="mb-4">
+                <i class="fas fa-chevron-right text-primary me-2"></i>
+                <span th:text="${entry.key.toString().replace('_', ' ')}">Category</span>
+            </h3>
+
+            <div class="row g-3">
+                <div class="col-md-4 col-lg-3" th:each="skill : ${entry.value}">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i th:if="${skill.iconClass}"
+                               th:class="${skill.iconClass} + ' fa-2x text-primary mb-3'"></i>
+                            <h5 class="card-title mb-2" th:text="${skill.name}">Skill</h5>
+                            <p class="card-text text-muted small mb-2">
+                                <span th:text="${skill.yearsOfExperience}">X</span> years experience
+                            </p>
+                            <!-- Proficiency Level -->
+                            <div class="progress" style="height: 5px;">
+                                <div class="progress-bar bg-primary"
+                                     role="progressbar"
+                                     th:style="'width: ' + ${skill.proficiencyLevel * 20} + '%'"
+                                     th:attr="aria-valuenow=${skill.proficiencyLevel * 20}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
 
 <!-- Featured Projects Section -->
 <section class="py-5" id="featured-projects">
