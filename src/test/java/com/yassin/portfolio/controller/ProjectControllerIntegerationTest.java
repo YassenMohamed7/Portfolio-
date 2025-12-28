@@ -78,6 +78,6 @@ class ProjectControllerIntegrationTest {
     @DisplayName("GET /projects/{id} with invalid ID should return 404")
     void getProjectDetail_WithInvalidId_ShouldReturn404() throws Exception {
         mockMvc.perform(get("/projects/999"))
-                .andExpect(status().isOk()); // okay global excption handling return 200 for 404 error page
+                .andExpect(status().isOk()); // okay global exception handling return 200 for 404 error page
     }
 }
