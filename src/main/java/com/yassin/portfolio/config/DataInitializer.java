@@ -124,6 +124,6 @@ public class DataInitializer implements CommandLineRunner {
                 .setTechnologies(technologies)
                 .build();
         projectService.saveProject(project);
-        log.info("Creating a new Project: " + projectService.getProjectById(1L));
+        log.info("Creating a new Project: {}", projectService.getProjectById(1L));
     }
 }
