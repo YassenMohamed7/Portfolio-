@@ -12,6 +12,7 @@ services:
       - SERVER_TOMCAT_THREADS_MAX=50
       - SERVER_TOMCAT_THREADS_MIN_SPARE=5
       - SPRING_CACHE_CAFFEINE_SPEC=maximumSize=200,expireAfterAccess=600s
+      -
     depends_on:
       db:
         condition: service_healthy
