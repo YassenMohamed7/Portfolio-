@@ -105,11 +105,6 @@ public class DataInitializer implements CommandLineRunner {
         skillService.saveSkill(firebase);
 
 
-
-
-
-
-
         List<String> technologies = new ArrayList<>();
         technologies.add("Spring boot");
         technologies.add("Java 8");
