@@ -33,10 +33,10 @@ public class Skill {
     private Integer displayOrder = 0;
 
     public enum SkillCategory {
-        FUNDAMENTALS,
         LANGUAGE,
         FRAMEWORK,
         DATABASE,
+        FUNDAMENTALS,
         DEVOPS,
         TESTING,
         MESSAGING,

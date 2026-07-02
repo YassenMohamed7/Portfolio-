@@ -16,6 +16,12 @@ USER spring:spring
 
 COPY --from=build /app/target/*.jar app.jar
 
+ENV JAVA_TOOL_OPTIONS="-XX:MaxRAMPercentage=65 -XX:InitialRAMPercentage=35 -XX:MaxMetaspaceSize=128m -XX:+ExitOnOutOfMemoryError" \
+    SERVER_TOMCAT_THREADS_MAX=50 \
+    SERVER_TOMCAT_THREADS_MIN_SPARE=5 \
+    SPRING_DATASOURCE_HIKARI_MAXIMUM_POOL_SIZE=5 \
+    SPRING_CACHE_CAFFEINE_SPEC=maximumSize=200,expireAfterAccess=600s
+
 EXPOSE 8080
 
 HEALTHCHECK --interval=30s --timeout=3s \

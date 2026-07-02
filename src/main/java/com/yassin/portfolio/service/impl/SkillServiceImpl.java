@@ -30,11 +30,14 @@ public class SkillServiceImpl implements SkillService {
     }
 
     @Override
-    @Cacheable(value = "skillsByCategory")
     public Map<SkillCategory, List<Skill>> getAllSkillsGroupedByCategory() {
-        log.info("Fetching skills grouped by category");
-        return getAllSkills().stream()
+        Map<SkillCategory, List<Skill>> skills = getAllSkills().stream()
                 .collect(Collectors.groupingBy(Skill::getCategory));
+        log.info("Fetching skills grouped by category");
+        skills.forEach((skill, listOfSkills)->
+                log.info(skill.toString() + listOfSkills.toString())
+        );
+        return skills;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class CacheConfig {
                 "projects", "featuredProjects", "skills", "skillsByCategory", "experiences", "technologies"
         );
         cacheManager.setCaffeine(Caffeine.newBuilder()
-                .maximumSize(500)
+                .maximumSize(100)
                 .expireAfterAccess(10, TimeUnit.MINUTES));
         return cacheManager;
     }

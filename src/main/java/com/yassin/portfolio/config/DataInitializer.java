@@ -105,20 +105,36 @@ public class DataInitializer implements CommandLineRunner {
         skillService.saveSkill(firebase);
 
 
-        List<String> technologies = new ArrayList<>();
-        technologies.add("Spring boot");
-        technologies.add("Java 8");
-
-        Project project = Project.builder()
+        List<String> couponTech = new ArrayList<>();
+        couponTech.add("Spring boot");
+        couponTech.add("Java 8");
+        couponTech.add("Restful");
+        couponTech.add("Spring Data JPA");
+        Project couponService = Project.builder()
                 .setId(1L)
                 .setTitle("Coupon Service")
                 .setImageUrl("/images/coupon.avif")
                 .setFeatured(Boolean.TRUE)
                 .setGithubUrl("https://github.com/Fawry-Microservices/Coupon-Api/tree/backend")
                 .setDisplayOrder(1)
-                .setTechnologies(technologies)
+                .setTechnologies(couponTech)
                 .build();
-        projectService.saveProject(project);
+        projectService.saveProject(couponService);
         log.info("Creating a new Project: {}", projectService.getProjectById(1L));
+
+        List<String> bikeAppTech = new ArrayList<>();
+        bikeAppTech.add("Nodejs");
+        bikeAppTech.add("Restful");
+        Project bikeApp = Project.builder()
+                .setId(2L)
+                .setTitle("Bike App Rental System")
+                .setImageUrl("/images/Bike.jpeg")
+                .setFeatured(Boolean.TRUE)
+                .setGithubUrl("https://github.com/YassenMohamed7/Bike_App")
+                .setDisplayOrder(2)
+                .setTechnologies(bikeAppTech)
+                .build();
+        projectService.saveProject(bikeApp);
+        log.info("Creating a new Project: {}", projectService.getProjectById(2L));
     }
 }
