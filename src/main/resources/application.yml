@@ -95,4 +95,4 @@ springdoc:
 
 app:
   contact:
-    email: yassenm.zafan@gmail.com
+    email:  ${MAIL_USERMANE}
