@@ -55,7 +55,7 @@ spring:
 
 logging:
   level:
-    com.yourname.portfolio: INFO
+    com.yassin.portfolio: INFO
     org.springframework: WARN
 
 ---
