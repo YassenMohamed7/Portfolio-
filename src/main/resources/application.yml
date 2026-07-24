@@ -61,17 +61,17 @@ logging:
 ---
 # Common properties
 spring:
-#  mail:
-#    host: smtp.gmail.com
-#    port: 2525
-#    username: ${MAIL_USERNAME}
-#    password: ${MAIL_PASSWORD}
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
+  mail:
+    host: smtp.gmail.com
+    port: 2525
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
   cache:
     type: caffeine
